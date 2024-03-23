@@ -1,17 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 const Home1 = () => {
+  const navigate = useNavigate();
   const userAgent = navigator.userAgent;
   const referrer = document.referrer;
 
-  // Redireccionamos después de mostrar la información
-  React.useEffect(() => {
+  // Redireccionamos después de mostrar la información usando useNavigate
+  useEffect(() => {
     const timer = setTimeout(() => {
-      window.location.href = '/home2';
+      navigate('/home2');
     }, 3000); // Espera 3 segundos antes de redirigir
     return () => clearTimeout(timer);
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
@@ -37,7 +38,7 @@ const Home2 = () => {
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/react-useragent-app"> {/* Asegúrate de reemplazar "/nombre-de-tu-repositorio" con el nombre real de tu repositorio */}
       <Routes>
         <Route path="/" element={<Navigate replace to="/home1" />} />
         <Route path="/home1" element={<Home1 />} />
